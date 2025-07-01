@@ -18,7 +18,7 @@ cp .env.example .env
 pnpm run dev
 ```
 
-The API will be available at `http://localhost:7000`
+The API will be available at `http://localhost:8000`
 
 ### Testing
 ```bash
@@ -63,11 +63,11 @@ Subsequent requests: Cache (1-5ms) → User
 **Example**:
 ```bash
 # First request (slow - cache miss)
-curl http://localhost:7000/users/1
+curl http://localhost:8000/users/1
 # Response time: ~200ms, "cached": false
 
 # Second request (fast - cache hit)  
-curl http://localhost:7000/users/1
+curl http://localhost:8000/users/1
 # Response time: ~5ms, "cached": true
 ```
 
@@ -93,11 +93,11 @@ User makes requests → Rate limiter checks → Allow or block (429 error)
 **Example**:
 ```bash
 # Normal request
-curl -i http://localhost:7000/users/1
+curl -i http://localhost:8000/users/1
 # Headers: X-RateLimit-Remaining: 9
 
 # Too many requests
-curl -i http://localhost:7000/users/1
+curl -i http://localhost:8000/users/1
 # Response: 429 Too Many Requests
 # Header: Retry-After: 30
 ```
@@ -139,27 +139,27 @@ Promise.all([
 ### Test Caching
 ```bash
 # First request (cache miss)
-time curl http://localhost:7000/users/1
+time curl http://localhost:8000/users/1
 
 # Second request (cache hit) 
-time curl http://localhost:7000/users/1
+time curl http://localhost:8000/users/1
 
 # Check cache statistics
-curl http://localhost:7000/cache/status
+curl http://localhost:8000/cache/status
 ```
 
 ### Test Rate Limiting
 ```bash
 # Send 6 rapid requests (should hit burst limit)
-for i in {1..6}; do curl http://localhost:7000/users/1; done
+for i in {1..6}; do curl http://localhost:8000/users/1; done
 ```
 
 ### Test Async Processing
 ```bash
 # Send multiple requests simultaneously
-curl http://localhost:7000/users/1 &
-curl http://localhost:7000/users/1 &
-curl http://localhost:7000/users/1 &
+curl http://localhost:8000/users/1 &
+curl http://localhost:8000/users/1 &
+curl http://localhost:8000/users/1 &
 wait
 ```
 
@@ -176,7 +176,7 @@ wait
 Environment variables in `.env`:
 ```bash
 NODE_ENV=development
-PORT=7000
+PORT=8000
 CORS_ORIGIN=*
 DB_DELAY_MS=200
 ```
